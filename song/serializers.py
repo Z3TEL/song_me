@@ -33,6 +33,7 @@ class RatingSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+
 class FavoriteListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Favorite

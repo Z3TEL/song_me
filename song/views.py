@@ -68,9 +68,14 @@ class SongViewSet(viewsets.ModelViewSet):
 
 class AuthorViewSet(viewsets.ModelViewSet):
     queryset = Author.objects.all()
-    print(queryset)
     serializer_class = AuthorSerializer
     filter_backends = [rest_filters.DjangoFilterBackend, filters.SearchFilter]
+    search_fields = ['name']
+
+    def get_serializer_class(self):
+        if self.action == 'list':
+            return AuthorSerializer
+        return super().get_serializer_class()
 
     def get_permissions(self):
         if self.action in ['create', 'update', 'partial_update', 'destroy', ]:
@@ -80,7 +85,6 @@ class AuthorViewSet(viewsets.ModelViewSet):
 
 class GenreViewSet(viewsets.ModelViewSet):
     queryset = Genre.objects.all()
-    print(queryset)
     serializer_class = GenreSerializer
 
     def get_permissions(self):
@@ -105,7 +109,7 @@ class CommentsViewSet(viewsets.ModelViewSet):
 
     def get_permissions(self):
         if self.action in ['update', 'partial_update', 'destroy']:
-            return [IsAdminUser(), IsAuthorOrIsAdmin()]
+            return [IsAuthorOrIsAdmin()]
         return []
 
 

@@ -33,14 +33,13 @@ class Song(models.Model):
 
 
 class Comment(models.Model):
-    chapter = models.ForeignKey(Song,
-                                on_delete=models.CASCADE,
-                                related_name='comment')
-    author = models.ForeignKey(User,
-                               on_delete=models.CASCADE,
-                               related_name='comment_author')
+    song = models.ForeignKey(Song ,on_delete=models.CASCADE, related_name='comment')
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comment_author')
     comment_text = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Песня : {self.song}. Пользователь : {self.author}.'
 
 
 def validate_rating(rating):
@@ -54,10 +53,11 @@ def validate_rating(rating):
 
 class Rating(models.Model):
     song = models.ForeignKey(Song, on_delete=models.CASCADE, related_name='rating_manga')
-    user = models.ForeignKey(User,
-                             on_delete=models.CASCADE,
-                             related_name='user_rating')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_rating')
     rating = models.SmallIntegerField(default=0, validators=[validate_rating])
+
+    def __str__(self):
+        return f'Песня : {self.song}. Пользователь : {self.user}. Рейтинг : {self.rating}.'
 
 
 class Like(models.Model):
@@ -65,8 +65,14 @@ class Like(models.Model):
     song = models.ForeignKey(Song, on_delete=models.CASCADE)
     is_liked = models.BooleanField(default=False)
 
+    def __str__(self):
+        return f'Песня : {self.song}. Пользователь : {self.user}. Лайк и дизлайк : {self.is_liked}.'
+
 
 class Favorite(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='favorites')
     song = models.ForeignKey(Song, on_delete=models.CASCADE, related_name='favorites')
     favorite = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f'Песня : {self.song}. Пользователь : {self.user}. Избранное : {self.favorite}.'
