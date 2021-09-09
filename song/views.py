@@ -1,5 +1,7 @@
 from django_filters import rest_framework as rest_filters
 from django_filters import rest_framework as filters
+from django.shortcuts import render, redirect
+from django.core.paginator import Paginator
 from rest_framework.decorators import action
 from rest_framework import viewsets
 from rest_framework.response import Response
@@ -131,3 +133,11 @@ class LikeViewSet(viewsets.ModelViewSet):
         if self.action in ['create', 'update', 'partial_update', 'destroy']:
             return [IsAuthorOrIsAdmin(), IsAuthenticated()]
         return []
+
+
+def index(request):
+    paginator = Paginator(Song.objects.all(), 1)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context={"page_obj": page_obj}
+    return render(request, "index.html", context)

@@ -23,13 +23,15 @@ class Genre(models.Model):
 
 class Song(models.Model):
     title = models.CharField(max_length=65, unique=True)
-    audio_file = models.FileField(upload_to='audios')
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user')
-    author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name='songs')
+    image= models.ImageField()
+    audio_file = models.FileField(blank=True,null=True)
+    artist = models.ForeignKey(Author, on_delete=models.CASCADE, related_name='songs')
     genre = models.ManyToManyField(Genre)
+    duration = models.CharField(max_length=20)
+    paginate_by = 2
 
     def __str__(self):
-        return f'{self.author} - {self.title} '
+        return f'{self.artist} - {self.title} '
 
 
 class Comment(models.Model):
