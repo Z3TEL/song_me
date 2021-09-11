@@ -81,7 +81,7 @@ class AuthorViewSet(viewsets.ModelViewSet):
 
     def get_permissions(self):
         if self.action in ['create', 'update', 'partial_update', 'destroy', ]:
-            return [IsAuthenticated()]
+            return [IsAdminUser()]
         return []
 
 
@@ -91,7 +91,7 @@ class GenreViewSet(viewsets.ModelViewSet):
 
     def get_permissions(self):
         if self.action in ['create', 'update', 'partial_update', 'destroy', ]:
-            return [IsAuthenticated()]
+            return [IsAdminUser()]
         return []
 
 
