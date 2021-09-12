@@ -1,3 +1,5 @@
+import requests
+from bs4 import BeautifulSoup
 from django_filters import rest_framework as rest_filters
 from django_filters import rest_framework as filters
 from django.shortcuts import render, redirect

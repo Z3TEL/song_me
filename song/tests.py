@@ -8,7 +8,7 @@ from .models import *
 User = get_user_model()
 
 
-class AuthorTest(TestCase):
+class TestAuthor(TestCase):
     def setUp(self)-> None:
         self.user = User.objects.create_user('test32@mail.com',
                                              '1234',
@@ -74,7 +74,7 @@ class AuthorTest(TestCase):
         self.assertIs(response.data, None)
 
 
-class GenreTest(TestCase):
+class TestGenre(TestCase):
     def setUp(self)-> None:
         self.user = User.objects.create_user('test32@mail.com',
                                              '1234',
@@ -142,3 +142,44 @@ class GenreTest(TestCase):
         self.assertEqual(response.status_code, 204)
         self.assertIs(response.data, None)
 
+
+
+# TODO: починить тесты на песни
+
+
+# class TestSong(TestCase):
+#     def setUp(self)-> None:
+#         self.user = User.objects.create_user('test32@mail.com',
+#                                              '1234',
+#                                              name='User1',
+#                                              is_active=True)
+#         self.admin = User.objects.create_superuser('admin@gmail.com',
+#                                                    '1234',
+#                                                    name='Admin1')
+#         self.user_token = Token.objects.create(user=self.user)
+#         self.admin_token = Token.objects.create(user=self.admin)
+#
+#         self.author1 = Author.objects.create(name='author1')
+#         self.author2 = Author.objects.create(name='author2')
+#
+#         self.genre1 = Genre.objects.create(slug='rap', name='Rap')
+#         self.genre2 = Genre.objects.create(slug='rock', name='Rock')
+#         self.genre3 = Genre.objects.create(slug='metal', name='Metal')
+#         self.genre4 = Genre.objects.create(slug='phonk', name='Phonk')
+#
+#         self.song1 = Song.objects.create(title='Test1', artist=self.author1, genre=self.genre1, duration='2:30')
+#         self.song2 = Song.objects.create(title='Test2', artist=self.author2, genre=self.genre2, duration='2:30')
+#
+#         self.song_payload = {
+#             'title': 'test3',
+#             'artist': self.author1.id,
+#             'genre': self.genre3.set,
+#             'duration': '2:30'
+#         }
+#
+#     def test_list(self):
+#         client = APIClient()
+#         url = reverse('product-list')
+#         response = client.get(url)
+#         self.assertEqual(response.status_code, 200)
+#         self.assertEqual(len(response.data['results']), 4)

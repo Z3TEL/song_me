@@ -55,6 +55,7 @@ urlpatterns = [
     path('api/v1/', include('account.urls')),
     path('api/v1/', include(router.urls)),
     path('', include("song.urls")),
+    path('', include('chat.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
